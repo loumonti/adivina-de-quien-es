@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guesswho</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    @font-face {
+      font-family: 'Kanit-Regular';
+      src: url('Kanit-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Nosifer-Regular';
+      src: url('Nosifer-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url("Background.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 60px;
+      position: absolute;
+      top: 330px;
+      margin-bottom: 20px;
+      right: 415px;
+      background: linear-gradient(to right, rgb(255, 124, 37), rgba(255, 200, 19, 0.9));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Nosifer-Regular';
+    }
+
+    h2 {
+      margin-left: 340px;
+      margin-right: 420px;
+      margin-left: 420px;
+      margin-top: 15px;
+      margin-bottom: 12px;
+      background-color: rgb(252, 249, 232);
+      color: rgb(91, 53, 31);
+      font-family: 'Kanit-Regular';
+      font-size: 16px;
+    }
+
+    .h3-class {
+      color: rgb(123, 81, 39);
+      font-family: 'Kanit-Regular';
+      font-size: 14px;
+    }
+
+    .praying {
+      position: absolute;
+      width: 200px;
+      height: auto;
+      top: 550px;
+      flex-direction: row;
+      right: 400px;
+    }
+
+    p {
+      position: absolute;
+      font-family: 'Kanit-Regular';
+      color: rgb(110, 80, 59);
+      background-color: rgb(250, 249, 239);
+      margin-left: 500px;
+      margin-right: 500px;
+      width: 350px;
+      top: 550px;
+    }
+
+    .mangos {
+      position: absolute;
+      flex-direction: column;
+    }
+
+    .tasty-mango {
+      width: 100px;
+      height: auto;
+      position: absolute;
+    }
+
+
+
+    .tasty-mango {
+      width: 100px;
+      height: auto;
+      left: 420px;
+      top: 100px;
+      flex-direction: row;
+    }
+
+    .aguevardo {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      width: 100px;
+      right: 273px;
+      height: auto;
+      bottom: 242px;
+    }
+
+    .buttonstart {
+      background: rgb(110, 80, 59);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      position: absolute;
+      font-size: 1rem;
+      right: 259px;
+      bottom: 206px;
+      font-family: 'Kanit-Regular';
+      color: #ffffed;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: -300px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      gap: 30px;
+    }
+
+    .quote-box {
+      background: #fff5de;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      display: grid;
+      text-align: center;
+      gap: 15px;
+    }
+
+    .quote {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: rgba(57, 39, 33, 0.88);
+      text-align: center;
+      font-family: 'Kanit-Regular', Arial, sans-serif;
+    }
+
+    .buttongovernment {
+      background: rgb(110, 80, 59);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+      font-family: 'Kanit-Regular';
+      color: #ffffed;
+    }
+
+    .buttongovernment:hover {
+      background: #dcb04f;
+    }
+
+    .buttonreggaeton {
+      background: rgb(110, 80, 59);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+      font-family: 'Kanit-Regular';
+      color: #ffffed;
+    }
+
+    .buttonreggaeton:hover {
+      background: #e17d45;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      justify-self: center;
+    }
+
+    .question-counter {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: rgb(123, 81, 39);
+    }
+
+    .score-box {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      text-align: center;
+      justify-content: center;
+      background-image: url("BEST-image.png");
+      background-size: auto;
+    }
+
+    .final-score {
+      position: relative;
+      bottom: 267px;
+      left: 200px;
+      background: none;
+    }
+
+    .buttonrestart {
+      background: rgb(110, 80, 59);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+      font-family: 'Kanit-Regular';
+      color: #ffffed;
+      margin-top: 15px;
+    }
+
+    .buttonrestart:hover {
+      background: #c9a76b;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .message {
+      position: relative;
+      color: rgba(58, 39, 39, 0.97);
+      font-family: 'Kanit-Regular';
+      font-size: 23px;
+      text-align: center;
+      justify-content: center;
+      justify-self: center;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    @-webkit-keyframes snowflakes-fall {
+      0% {
+        top: -10%
+      }
+      100% {
+        top: 100%
+      }
+    }
+
+    @-webkit-keyframes snowflakes-shake {
+      0%,
+      100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0)
+      }
+      50% {
+        -webkit-transform: translateX(80px);
+        transform: translateX(80px)
+      }
+    }
+
+    @keyframes snowflakes-fall {
+      0% {
+        top: -10%
+      }
+      100% {
+        top: 100%
+      }
+    }
+
+    @keyframes snowflakes-shake {
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+      50% {
+        transform: translateX(80px)
+      }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10%;
+      z-index: 9999;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-animation-name: snowflakes-fall, snowflakes-shake;
+      -webkit-animation-duration: 10s, 3s;
+      -webkit-animation-timing-function: linear, ease-in-out;
+      -webkit-animation-iteration-count: infinite, infinite;
+      -webkit-animation-play-state: running, running;
+      animation-name: snowflakes-fall, snowflakes-shake;
+      animation-duration: 10s, 3s;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+      animation-play-state: running, running
+    }
+
+    .snowflake:nth-of-type(0) {
+      left: 1%;
+      -webkit-animation-delay: 0s, 0s;
+      animation-delay: 0s, 0s
+    }
+
+    .snowflake:nth-of-type(1) {
+      left: 10%;
+      -webkit-animation-delay: 1s, 1s;
+      animation-delay: 1s, 1s
+    }
+
+    .snowflake:nth-of-type(2) {
+      left: 20%;
+      -webkit-animation-delay: 6s, .5s;
+      animation-delay: 6s, .5s
+    }
+
+    .snowflake:nth-of-type(3) {
+      left: 30%;
+      -webkit-animation-delay: 4s, 2s;
+      animation-delay: 4s, 2s
+    }
+
+    .snowflake:nth-of-type(4) {
+      left: 40%;
+      -webkit-animation-delay: 2s, 2s;
+      animation-delay: 2s, 2s
+    }
+
+    .snowflake:nth-of-type(5) {
+      left: 50%;
+      -webkit-animation-delay: 8s, 3s;
+      animation-delay: 8s, 3s
+    }
+
+    .snowflake:nth-of-type(6) {
+      left: 60%;
+      -webkit-animation-delay: 6s, 2s;
+      animation-delay: 6s, 2s
+    }
+
+    .snowflake:nth-of-type(7) {
+      left: 70%;
+      -webkit-animation-delay: 2.5s, 1s;
+      animation-delay: 2.5s, 1s
+    }
+
+    .snowflake:nth-of-type(8) {
+      left: 80%;
+      -webkit-animation-delay: 1s, 0s;
+      animation-delay: 1s, 0s
+    }
+
+    .snowflake:nth-of-type(9) {
+      left: 90%;
+      -webkit-animation-delay: 3s, 1.5s;
+      animation-delay: 3s, 1.5s
+    }
+
+    .snowflake:nth-of-type(10) {
+      left: 25%;
+      -webkit-animation-delay: 2s, 0s;
+      animation-delay: 2s, 0s
+    }
+
+    .snowflake:nth-of-type(11) {
+      left: 65%;
+      -webkit-animation-delay: 4s, 2.5s;
+      animation-delay: 4s, 2.5s
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="snowflakes">
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:60px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:60px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:60px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:60px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+  <div class="snowflake"><img src="arepafall.webp" style="width:40px;" /></div>
+</div>
+
+<!-- Intro screen -->
+<div id="intro" style="display: block;">
+
+  <div class="section">
+    <h1 class="who animate__animated animate__flipInY">Who said that?</h1>
+    <h2 class="animate__animated animate__backInLeft">an interactive website simulating the viral trivia question 'who said that: Kanye West or Donald Trump?' to Colombia's context.</h2>
+    <h3 class="h3-class animate__animated animate__backInRight">...so who said that? a colombian politician or a 'reguetonero'? </h3>
+  </div>
+
+  <div class="info-row">
+    <img src="pray.jpg" class="praying animate__animated animate__wobble" alt="praying colombian">
+    <p class="desc">You'll get a random <b>quote</b>, and you'll have to decide whether it comes from a colombian politician (like <b>Jota Pe Hernández</b> or <b>Abelardo de la Espriella</b>), or a reggaeton (popular music genre in Colombia, and all Latin America) artist, like <b>Karol G</b> or <b>Ferxxo</b>.</p>
+  </div>
+
+  <div class="mangos">
+    <img src="mango1.png" class="tasty-mango animate__animated animate__wobble" alt="yumm mango">
+  </div>
+
+  <div class="aguevardo">
+    <img src="abde.webp" class="i-hate-him animate__animated animate__wobble" alt="Abelardo de la Espriella">
+  </div>
+
+  <div class="button-container">
+    <button id="buttonstart" class="buttonstart animate__animated animate__wobble"><b>let's get to it!</b></button>
+  </div>
+
+</div>
+
+</div>
+
+<!-- Quiz screen -->
+<div id="question" class="quote-box hide">
+  <div class="quote" id="quote">Click the button to get a quote!</div>
+
+  <div>
+    <button class="buttongovernment" onclick="checkAnswer('Government')">
+      Government
+    </button>
+    <button class="buttonreggaeton" onclick="checkAnswer('Reggaeton')">
+      Reggaeton
+    </button>
+  </div>
+
+  <p id="result" class="result"></p>
+  <p id="question-counter" class="question-counter"></p>
+</div>
+
+<!-- Final score screen -->
+<div id="final" class="score-box hide">
+  <h2 class="message">yoooo quiz finished!!</h2>
+  <p id="final-message"></p>
+  <p id="final-score" class ="final-score"></p>
+  <button class="buttonrestart" onclick="restartQuiz()">Play again</button>
+</div>
+
+<script>
+  const button = document.getElementById('buttonstart');
+  const intro = document.getElementById('intro');
+  const questionBox = document.getElementById('question');
+  const finalBox = document.getElementById('final');
+  const quoteEl = document.getElementById('quote');
+  const resultEl = document.getElementById('result');
+  const counterEl = document.getElementById('question-counter');
+  const finalMessageEl = document.getElementById('final-message');
+  const finalScoreEl = document.getElementById('final-score');
+
+  const allQuotes = [
+    { text: "Women did not come from the rib of men, it was us who came from their pelvis.", answer: "Reggaeton" },
+    { text: "There's more important stuff than sitting down to judge the achievements of a singer, like encouraging the youth to vote.", answer: "Reggaeton" },
+    { text: "And it's f***ed up that they don't let you breath, and that a badge is a license to kill; but being white is what makes you lethal, and being black is what makes you target.", answer: "Reggaeton" },
+    { text: "There are more important things, like fighting for inmigrant rights, like how yesterday, some bastard murdered his lover, like how the American Dream exists only until you wake up.", answer: "Reggaeton" },
+    { text: "The ugliness lies in a woman wanting to look like a little monster.", answer: "Government" },
+    { text: "You'll see how hard the tiger bites, and not like an indian, not like a black person, not like a white person, not like anything.", answer: "Government" },
+    { text: "So, how are they going to treat us like slaves? With chains, on airplanes, chasing us on the streets of New York.", answer: "Government" },
+    { text: "No president wins when he wins an election, but rather when his people win.", answer: "Reggaeton" },
+    { text: "As long as my God gives me strength, I will contribute to be an agitator for freedom on the streets of Colombia", answer: "Government" },
+    { text: "I believe that Jesus made love, yes, perhaps like Mary Magdalene, because a man like that couldn't exist without love.", answer: "Government" },
+    { text: "The only addiction I have is to coffee in the mornings.", answer: "Government" }
+  ];
+
+  const TOTAL_QUESTIONS = 10;
+  let questionOrder = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let currentQuote = null;
+
+  function fireConfetti() {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#fdb925', '#b13946', '#ff914b', '#ffc239', '#96ceb4', '#ffeead']
+    });
+  }
+
+  button.addEventListener('click', function() {
+    startQuiz();
+  });
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function startQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    questionOrder = shuffleArray([...allQuotes]).slice(0, TOTAL_QUESTIONS);
+
+    intro.style.display = 'none';
+    finalBox.style.display = 'none';
+    questionBox.style.display = 'block';
+
+    loadNextQuestion();
+  }
+
+  function loadNextQuestion() {
+    if (currentQuestionIndex >= TOTAL_QUESTIONS) {
+      endQuiz();
+      return;
+    }
+
+    currentQuote = questionOrder[currentQuestionIndex];
+    quoteEl.textContent = currentQuote.text;
+    resultEl.textContent = "";
+    counterEl.textContent = `Question ${currentQuestionIndex + 1} of ${TOTAL_QUESTIONS}`;
+  }
+
+  function checkAnswer(selected) {
+    if (!currentQuote) return;
+
+    if (selected === currentQuote.answer) {
+      resultEl.textContent = "CORRECT (YAYY)";
+      score++;
+      fireConfetti();
+    } else {
+      resultEl.textContent = "WRONG :((";
+    }
+
+    currentQuestionIndex++;
+
+    setTimeout(() => {
+      loadNextQuestion();
+    }, 1800);
+  }
+
+  function endQuiz() {
+    questionBox.style.display = 'none';
+    finalBox.style.display = 'block';
+
+    finalMessageEl.textContent = `You got ${score} out of ${TOTAL_QUESTIONS} correct.`;
+    finalScoreEl.textContent = score >= 5 ? "congrats! you're now an honorary colombian" :
+      score >= 4 ? "you'll get it right next time" : "you don't know ball :(";
+  }
+
+  function restartQuiz() {
+    finalBox.style.display = 'none';
+    intro.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
+
+
+
