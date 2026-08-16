@@ -10,8 +10,8 @@
     @font-face {
       font-family: 'Kanit-Regular';
       src: url('Kanit-Regular.ttf') format('truetype');
-      font-weight: bold;
-      font-style: normal;
+      font-weight: normal;
+      font-style: bold;
     }
 
     @font-face {
@@ -87,11 +87,22 @@
       font-family: 'Kanit-Regular';
       color: rgb(110, 80, 59);
       background-color: rgb(250, 249, 239);
+      width: 350px;
+      top: 550px;
+      text-align: center;
+    }
+
+    .desc {
+      position: absolute;
+      font-family: 'Kanit-Regular';
+      color: rgb(110, 80, 59);
+      background-color: rgb(250, 249, 239);
       margin-left: 500px;
       margin-right: 500px;
       width: 350px;
       top: 550px;
     }
+
 
     .mangos {
       position: absolute;
@@ -210,9 +221,12 @@
     }
 
     .question-counter {
-      margin-top: 6px;
-      font-size: 0.9rem;
-      color: rgb(123, 81, 39);
+      font-family: 'Kanit-Regular';
+      color: rgb(110, 80, 59);
+      background-color: rgb(250, 249, 239);
+      margin-top: 25vh;
+      margin-left: 8vh;
+      justify-content: center;
     }
 
     .score-box {
@@ -223,15 +237,14 @@
       max-width: 500px;
       text-align: center;
       justify-content: center;
-      background-image: url("BEST-image.png");
-      background-size: auto;
     }
 
     .final-score {
-      position: relative;
-      bottom: 267px;
-      left: 200px;
-      background: none;
+      font-family: 'Kanit-Regular';
+      color: rgb(110, 80, 59);
+      margin: auto;
+      justify-content: center;
+      text-align: center;
     }
 
     .buttonrestart {
@@ -469,7 +482,7 @@
 <div id="final" class="score-box hide">
   <h2 class="message">yoooo quiz finished!!</h2>
   <p id="final-message"></p>
-  <p id="final-score" class ="final-score"></p>
+  <p id="final-score" class="final-score"></p>
   <button class="buttonrestart" onclick="restartQuiz()">Play again</button>
 </div>
 
@@ -572,8 +585,8 @@
     finalBox.style.display = 'block';
 
     finalMessageEl.textContent = `You got ${score} out of ${TOTAL_QUESTIONS} correct.`;
-    finalScoreEl.textContent = score >= 5 ? "congrats! you're now an honorary colombian" :
-      score >= 4 ? "you'll get it right next time" : "you don't know ball :(";
+    finalScoreEl.textContent = score >= 5 ? "congrats! you're now an honorary colombian (you had 5 or more correct!)" :
+      score >= 4 ? "you'll get it right next time (less than 4 correct :c)" : "you don't know ball :( (you had less than 4 correct :c)";
   }
 
   function restartQuiz() {
